@@ -1,0 +1,3 @@
+This version of the firmware is for the test environment without any external clock source. if you want to use an external clock, change the appropriate fuse settings and the define in the source(s). (This should be easy to find)
+
+Xander
