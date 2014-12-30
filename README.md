@@ -3,7 +3,9 @@ RPi-PowerFunctions
 
 A project to send commands over IR to a LEGO PowerFunctions receiver using an Raspberry Pi, I2C and an ATtiny2313
 
-This project will (eventually) include all sources (for the Raspberry Pi and ATTiny2313) and hardware schematics.
+The Eagle project files have been added (including the PCB designs), as are the XMLRPC server files.
+
+I'll try to update/create READMEs for the sub folders in the near future. Unfortunately my documenting skills are a bit 'subzero'
 
 For this project I would like to thank a few people, who I will list down here. Please note that the order is random!
 - Jurriaan Pruis (https://github.com/jurriaan/) for his project which gave me the idea(s)
