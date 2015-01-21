@@ -1,27 +1,28 @@
 #!/usr/bin/python -u
 """
-  LEGO PowerFunctions I2C Server
+	LEGO PowerFunctions I2C Server
 
-  File:		main.py
-  Author:	Xander Maas <xander@xjmaas.nl>
-  Date:		10 oct 2014
+	File:			main.py
+	Author:			Xander Maas	<xander@xjmaas.nl>
+	Version:		1.0.1
+	Date:			10 oct 2014
 
-  LICENSE INFO:
-	This program is free software; you can redistribute it and/or modify it
-	under the terms of the GNU General Public License as published by the
-	Free Software Foundation; either version 2 of the License, or (at your
-	option) any later version.
- 
-	This program is distributed in the hope that it will be useful, but
-	WITHOUT ANY WARRANTY; without even the implied warranty of
-	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-	GNU General Public License for more details.
+  Version history:
+	0.1		10 oct 2014 -		Initial version/try
+	1.0		31 dec 2014 -		First public release on GitHub
+	1.0.1	21 jan 2015 -		Added an additional test for the checksum nibble of
+								command. Also added a test to check if the command is
+								being sent to the correct channel
 
-	Copyright (c) Xander Maas, 2014
+	LICENSE INFO:
+		AS FOR NOW THIS SOFTWARE IS NOT TO BE PUBLISHED WITHOUT MY EXPLICIT
+		WRITTEN PERMISSION ONLY.
 
-	This program will create a XMLRPC server, which translates the
+	Copyright (c) Xander Maas, 2014-2015
+
+	This programm will create a tcp based server, which translates the
 	commands sent from (another) device over TCP/IP to the I2C command(s)
-	which will be sent over the I2C bus of the RPi
+  which will be sent over the I2C bus of the RPi
 """
 
 # Our import(s)
@@ -75,12 +76,34 @@ if __name__ == '__main__':
 			logging.debug('Seems the requested channel is out of bounds')
 			return dict(status = False, description = 'Channel out of bounds')
 
+		# Check if the checksum is correct for this command
+		# Low Nibble High Byte
+		nib1 = command >> 12 & 0xf
+		# High Nibble High Byte
+		nib2 = command >> 8 & 0xf
+		# High Nibble Low Byte
+		nib3 = command >> 4 & 0xf
+		# Checksum = Low Nibble Low Byte
+		chksum = command & 0xf
+		logging.debug(' Our nibbles: 1 = %s, 2 = %s, 3 = %s, chk = %s', str(hex(nib1)), str(hex(nib2)), str(hex(nib3)), str(hex(chksum)))
+		calculatedChksum = 0xf ^ nib1 ^ nib2 ^ nib3
+		if (chksum != calculatedChksum):
+			desc = "Checksum for the command isn't correct. Expected " + str(hex(calculatedChksum)) + ", got " + str(hex(chksum))
+			return dict(status = False, description = desc)
 		# Test if the requested channel is available (board installed/connected)
 		boardAvailable = channelAvailable(channel)
 		address = boardAvailable['address']
 		if boardAvailable['status'] == False:
 			logging.debug('Seems the requested channel is unavailable (board %s not installed)', str(hex(address)))
 			return dict(status = False, description = 'Channel (board ' + str(hex(address)) + ') not installed')
+
+		# As we already have the nibble with the channel information, test if the 
+		# board will be addressed
+		_channel = (nib1 & 0x3) + 1
+		if (_channel != channel):
+			descr = "You cannot send this command to channel " + str(channel) + " as the command is created for channel " + str(_channel)
+			logging.debug('Wrong channel is chosen. Command is for channel %d, but channel %d is requested', _channel, channel)
+			return dict(status = False, description = descr)
 
 		# Seems we got an available channel/board, next we have to send the
 		# command to the board
@@ -128,7 +151,8 @@ if __name__ == '__main__':
 		logging.debug('==== main.boardsDict() ====')
 		boards = []
 		for board in i2cBoards:
-			boards.append(dict(address = hex(board.address), version = board.version))
+			if board.installed == True:
+				boards.append(dict(address = hex(board.address), version = board.version))
 		return boards
 
 	try:
