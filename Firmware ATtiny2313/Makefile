@@ -27,7 +27,8 @@ FUSES      = -U hfuse:w:0xdf:m -U lfuse:w:0xe4:m
 # We are adding addional options
 # e.g. to create the assembler file (-Wa,-adhlns=<file>)
 # and to strip unneeded objects (-Wl,--gc-sections -ffunction-sections -fdata-sections)
-CFLAGS     = -g -std=gnu99 -mcall-prologues -Wl,--gc-sections -ffunction-sections -fdata-sections -DDEBUG=1 -O2
+#CFLAGS     = -g -std=gnu99 -mcall-prologues -Wl,--gc-sections -ffunction-sections -fdata-sections -DDEBUG=1 -O2
+CFLAGS     = -g -std=gnu99 -mcall-prologues -Wl,--gc-sections -ffunction-sections -fdata-sections -O2
 
 # ATMega8 fuse bits used above (fuse bits for other devices are different!):
 # Example for 8 MHz internal oscillator

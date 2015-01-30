@@ -119,9 +119,9 @@ static const unsigned PROGMEM char bit_mask[] = {1, 2, 4, 16, 32, 64, 128};
 
 // Version
 #define MAJOR_VERSION 	0
-#define MINOR_VERSION 	0
-#define REVISION 		1
-#define RELEASE 		'A'	//	A == 0x41 == Alpha
+#define MINOR_VERSION 	1	
+#define REVISION 		0
+#define RELEASE 		'R'	//	A == 0x41 == Alpha
 							//	B == 0x42 == Bravo
 							//	R == 0x52 == Release Candidate
 							//	G == 0x47 == Gold Master

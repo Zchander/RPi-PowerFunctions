@@ -33,6 +33,8 @@
  * Change history:
  *      date        Description
  *      26 Dec 2014 First public release.
+ *      30 Jan 2015	Added a checksum recalculation to task1() as we also have
+ *      			to toggle a bit in nibble1 of the pfCommand
  */
 
 #include <avr/io.h>
@@ -174,6 +176,16 @@ void task1(void) {
         // if a (complete) PF command has been received (2 bytes)
         // process it
         for ( uint8_t i = 0; i < 6; i++ ) {
+			// We have to toggle the Toggle bit, but this also implies a
+			// recalculation of nibble 4 (checksum)
+			uint8_t nib1 = pfCommand >> 12 & 0xf;
+			uint8_t nib2 = pfCommand >> 8 & 0xf;
+			uint8_t nib3 = pfCommand >> 4 & 0xf;
+			// Toggle the bit (MSB in nibble)
+			nib1 = nib1 ^ 8;
+			uint8_t nib4 = 0xf ^ nib1 ^ nib2 ^ nib3;
+			// Constuct our new command
+			pfCommand = nib1 << 12 | nib2 << 8 | nib3 << 4 | nib4;
             // Send the command 6 times!
             pause(i);
 
