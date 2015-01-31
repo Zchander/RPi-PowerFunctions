@@ -35,6 +35,9 @@
  *      26 Dec 2014 First public release.
  *      30 Jan 2015	Added a checksum recalculation to task1() as we also have
  *      			to toggle a bit in nibble1 of the pfCommand
+ *      31 Jan 2015	Found aout that Combo PWM uses the Escape bit and moves the
+ *      			address bit to bit 0 of nibble 1. We don't want to toggle
+ *      			this bit when using Combo PWM
  */
 
 #include <avr/io.h>
@@ -118,25 +121,6 @@ void task0(void) {
     
 	// Check if th PFWORD flasg is set (both bytes have been received)
 	if ( (PFREG0 & ((1 << PFLB) | (1 << PFHB))) ) {
-		/*
-         * Might have to reconsider my bitwise calcs
-        // First load the highByte first
-		pfCommand = highByte;
-
-		// Shift the highByte 8 bits to the left! 
-		// (to the 'high' part of the word)
-		pfCommand <<= 8;
-
-		// Next add the lowByte
-		// (Directly in it's proper location)
-		pfCommand += lowByte;
-
-         */
-        //converted_byte(highByte, lowByte);
-        //send_string(converted);
-        //send_string("\n\r");
-        // From Stackoverflow:
-        // http://stackoverflow.com/questions/15249791/combining-two-uint8-t-as-uint16-t
         pfCommand = ((uint16_t)highByte << 8) | lowByte;
         
 		// Make sure the PFREG0 register is updated, so we know a new
@@ -148,16 +132,7 @@ void task0(void) {
 		PFREG0 &= ~(1 << PFHB);
         highByte = 0x00;
         lowByte = 0x00;
-
-        /*
-#ifdef DEBUG
-		// Toggle the DEBUG LEDs
-		PORTD &= ~(1 << I2C_RCVD_LOW);
-        PORTD &= ~(1 << I2C_RCVD_HGH);
-#endif
-         */
 	}
-    
 	// When the task has finished, reset the task
 	task_reset(0);
 }
@@ -181,8 +156,13 @@ void task1(void) {
 			uint8_t nib1 = pfCommand >> 12 & 0xf;
 			uint8_t nib2 = pfCommand >> 8 & 0xf;
 			uint8_t nib3 = pfCommand >> 4 & 0xf;
-			// Toggle the bit (MSB in nibble)
-			nib1 = nib1 ^ 8;
+			
+			// We only want to toggle this bit when bit 3 is NOT set
+			// Which means, we are using PWM Combo mode
+			if ((nib1 & ~(1 << 2))) {
+				// Toggle the bit (MSB in nibble)
+				nib1 = nib1 ^ 8;
+			}
 			uint8_t nib4 = 0xf ^ nib1 ^ nib2 ^ nib3;
 			// Constuct our new command
 			pfCommand = nib1 << 12 | nib2 << 8 | nib3 << 4 | nib4;
