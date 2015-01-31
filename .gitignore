@@ -1,12 +1,16 @@
 
-*.b#3
+*.b#?
 
-*.s#3
+*.s#?
 
-Eagle files/RPi Lego Server I2C/I2C Lego PowerFunctions Board v1_0A.s#2
+*.pyc
 
-Eagle files/RPi Lego Server I2C/I2C Lego PowerFunctions Board v1_0A.b#1
+*.lst
 
-Eagle files/RPi Lego Server I2C/I2C Lego PowerFunctions Board v1_0A.s#1
+*.elf
 
-Eagle files/RPi Lego Server I2C/I2C Lego PowerFunctions Board v1_0A.b#2
+*.hex
+
+*.o
+
+*.swp
