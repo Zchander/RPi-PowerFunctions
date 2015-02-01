@@ -1,26 +1,19 @@
 """
   LEGO PowerFunctions I2C Server
 
-  File:		i2cBoard.py
-  Author:	Xander Maas <xander@xjmaas.nl>
-  Date:		30 dec 2014
+  File:       main.py
+  Author:     Xander Maas <xander@xjmaas.nl>
+  Date:       10 oct 2014
 
   LICENSE INFO:
-	This program is free software; you can redistribute it and/or modify it
-	under the terms of the GNU General Public License as published by the
-	Free Software Foundation; either version 2 of the License, or (at your
-	option) any later version.
- 
-	This program is distributed in the hope that it will be useful, but
-	WITHOUT ANY WARRANTY; without even the implied warranty of
-	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-	GNU General Public License for more details.
+    AS FOR NOW THIS SOFTWARE IS NOT TO BE PUBLISHED WITHOUT MY EXPLICIT
+    WRITTEN PERMISSION ONLY.
 
-	Copyright (c) Xander Maas, 2014
+  Copyright (c) Xander Maas, 2014
 
-	This program will create a XMLRPC server, which translates the
-	commands sent from (another) device over TCP/IP to the I2C command(s)
-	which will be sent over the I2C bus of the RPi
+  This programm will create a tcp based server, which translates the
+  commands sent from (another) device over TCP/IP to the I2C command(s)
+  which will be sent over the I2C bus of the RPi
 """
 import smbus
 import logging
@@ -47,7 +40,7 @@ class i2cBoard(object):
 		idByte4 = unichr(self.bus.read_byte_data(self.address, 13))
 		identification = str(idByte1) + str(idByte2) + str(idByte3) + str(idByte4)
 		if identification != 'PFXM':
-			print 'Unknown board at I2C address ' + str(self.address)
+			print 'Unknown board at I2C address ' + str(hex(self.address))
 			print 'Received identification string: ' + identification
 			return False
 		else:

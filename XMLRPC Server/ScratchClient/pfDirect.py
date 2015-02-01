@@ -1,3 +1,23 @@
+"""
+	Scratch Client for Lego PowerFunctions I2C
+
+	File:           pfDirect.py
+	Author:         Xander Maas
+	Version:        1.0
+	Date:           31 jan 2015
+
+	Version history:
+	1.0     31 jan 2015 -   Initial release
+
+	LICENSE INFO:
+	AS FOR NOW THIS SOFTWARE IS NOT TO BE PUBLISHED WITHOUT MY EXPLICIT
+	WRITTEN PERMISSION ONLY.
+
+	Copyright (c)  Xander Maas, 2015
+
+	Class to compose a Direct command
+"""
+
 class pfDirect(object):
 
 	def __init(self):

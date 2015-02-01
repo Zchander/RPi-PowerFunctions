@@ -1,27 +1,26 @@
 #!/usr/bin/python -u
 """
-	LEGO PowerFunctions I2C Server
+  LEGO PowerFunctions I2C Server
 
-	File:			main.py
-	Author:			Xander Maas	<xander@xjmaas.nl>
-	Version:		1.0.1
-	Date:			10 oct 2014
+  File:      main.py
+  Author:    Xander Maas  <xander@xjmaas.nl>
+  Version:   1.0.2
+  Date:      10 oct 2014
 
   Version history:
-	0.1		10 oct 2014 -		Initial version/try
-	1.0		31 dec 2014 -		First public release on GitHub
-	1.0.1	21 jan 2015 -		Added an additional test for the checksum nibble of
-								command. Also added a test to check if the command is
-								being sent to the correct channel
+     0.1     10 oct 2014 -   Initial version/try
+     1.0     31 dec 2014 -   First public release on GitHub
+     1.0.1   21 jan 2015 -   Added an additional test for the checksum nibble of
+     1.0.2   01 feb 2015 -   Added a check for installed boards
 
-	LICENSE INFO:
-		AS FOR NOW THIS SOFTWARE IS NOT TO BE PUBLISHED WITHOUT MY EXPLICIT
-		WRITTEN PERMISSION ONLY.
+  LICENSE INFO:
+    AS FOR NOW THIS SOFTWARE IS NOT TO BE PUBLISHED WITHOUT MY EXPLICIT
+    WRITTEN PERMISSION ONLY.
 
-	Copyright (c) Xander Maas, 2014-2015
+    Copyright (c) Xander Maas, 2014-2015
 
-	This programm will create a tcp based server, which translates the
-	commands sent from (another) device over TCP/IP to the I2C command(s)
+  This programm will create a tcp based server, which translates the
+  commands sent from (another) device over TCP/IP to the I2C command(s)
   which will be sent over the I2C bus of the RPi
 """
 
@@ -32,6 +31,7 @@ from i2cBoard import *
 from xmlServer import *
 import logging
 import smbus
+import sys
 
 i2cBoards = []
 i2cBus = i2c().bus
@@ -44,6 +44,12 @@ if __name__ == '__main__':
 		board = i2cBoard(i, i2cBus)
 		if board.installed == True:
 			i2cBoards.append(board)
+
+	if (len(i2cBoards) < 1):
+		print ''
+		print 'ERROR: No boards detected, make sure at least one board has been installed'
+		print ''
+		sys.exit(2)
 
 	for board in i2cBoards:
 		if board.identified == True:
@@ -64,7 +70,7 @@ if __name__ == '__main__':
 
 	def returnVersion():
 		logging.debug('==== main.returnVersion() ====')
-		return '1.0'
+		return '1.0.2'
 
 	def pfCommand(command, channel = 1):
 		logging.debug('==== main.pfCommand() ====')

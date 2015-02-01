@@ -1,6 +1,26 @@
 #!/usr/bin/env python
 """
-	Copyright 2015, Xander Maas
+	Scratch Client for Lego PowerFunctions I2C
+
+	File:           main.py
+	Author:         Xander Maas
+	Version:        1.0.1
+	Date:           01 feb 2015
+
+	Version history:
+	1.0     31 jan 2015 -   Initial release
+	1.0.1   01 feb 2015 -   Just added version information switch
+                                Also updated the source files with additional
+                                comments
+
+	LICENSE INFO:
+	AS FOR NOW THIS SOFTWARE IS NOT TO BE PUBLISHED WITHOUT MY EXPLICIT
+	WRITTEN PERMISSION ONLY.
+
+	Copyright (c)  Xander Maas, 2015
+
+	This program creates a client which can be used with the broadcast messages
+	in Scratch (version 1.4).
 """
 
 import scratch
@@ -239,7 +259,7 @@ def listen(server):
 
 def processCmdLine(argv):
 	try:
-		opts, args = getopt.getopt(argv, "dhs:x:", ["debug", "help", "server=", "xmlserver="])
+		opts, args = getopt.getopt(argv, "dhs:vx:", ["debug", "help", "server=", "xmlserver=", "version"])
 		if len(opts) == 0:
 			usage()
 			sys.exit(2)
@@ -262,6 +282,11 @@ def processCmdLine(argv):
 				sys.exit(2)
 			global _server
 			_server = arg
+		elif opt in ("-v", "--version"):
+			print "Scratch Client for Lego PowerFunctions I2C"
+			print "Version 1.0"
+			print ""
+			sys.exit(0)
 		elif opt in ("-x", "--xmlserver"):
 			if (arg == "" or arg == None):
 				usage()
@@ -278,6 +303,7 @@ def usage():
 	print " -x, -xmlserver     IP address of XML-RPC server, e.g. http://127.0.0.1:9000"
 	print " -d, --debug        Enable debug logging"
 	print " -h, --help         Show this information"
+	print " -v, --version      Show version information"
 	print ""
 
 if __name__ == "__main__":
