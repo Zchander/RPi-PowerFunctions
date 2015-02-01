@@ -1,26 +1,26 @@
 #!/usr/bin/env python
 """
-	Scratch Client for Lego PowerFunctions I2C
+  Scratch Client for Lego PowerFunctions I2C
+  
+  File:      main.py
+  Author:    Xander Maas
+  Version:   1.0.1
+  Date:      01 feb 2015
 
-	File:           main.py
-	Author:         Xander Maas
-	Version:        1.0.1
-	Date:           01 feb 2015
-
-	Version history:
-	1.0     31 jan 2015 -   Initial release
-	1.0.1   01 feb 2015 -   Just added version information switch
-                                Also updated the source files with additional
-                                comments
-
-	LICENSE INFO:
-	AS FOR NOW THIS SOFTWARE IS NOT TO BE PUBLISHED WITHOUT MY EXPLICIT
-	WRITTEN PERMISSION ONLY.
-
-	Copyright (c)  Xander Maas, 2015
-
-	This program creates a client which can be used with the broadcast messages
-	in Scratch (version 1.4).
+  Version history:
+    1.0     31 jan 2015 -   Initial release
+    1.0.1   01 feb 2015 -   Just added version information switch
+                            Also updated the source files with additional
+			    comments
+			    
+  LICENSE INFO:
+    AS FOR NOW THIS SOFTWARE IS NOT TO BE PUBLISHED WITHOUT MY EXPLICIT
+    WRITTEN PERMISSION ONLY.
+    
+  Copyright (c)  Xander Maas, 2015
+  
+  This program creates a client which can be used with the broadcast messages
+  in Scratch (version 1.4).
 """
 
 import scratch

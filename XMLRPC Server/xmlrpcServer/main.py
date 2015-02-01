@@ -11,6 +11,8 @@
      0.1     10 oct 2014 -   Initial version/try
      1.0     31 dec 2014 -   First public release on GitHub
      1.0.1   21 jan 2015 -   Added an additional test for the checksum nibble of
+                             command. Also added a test to check if the command is
+                             being sent to the correct channel
      1.0.2   01 feb 2015 -   Added a check for installed boards
 
   LICENSE INFO:
