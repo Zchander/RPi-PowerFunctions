@@ -14,6 +14,7 @@
                              command. Also added a test to check if the command is
                              being sent to the correct channel
      1.0.2   01 feb 2015 -   Added a check for installed boards
+     1.1.0   12 feb 2015 -   Added support for B+/A+/Compute Module and RPi2B
 
   LICENSE INFO:
     AS FOR NOW THIS SOFTWARE IS NOT TO BE PUBLISHED WITHOUT MY EXPLICIT

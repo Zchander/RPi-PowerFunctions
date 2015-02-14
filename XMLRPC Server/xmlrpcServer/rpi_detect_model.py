@@ -18,6 +18,8 @@ You can instantiate the ModelInfo class either with a parameter `rev_hex`
 Author: Chris Hager <chris@linuxuser.at>
 License: MIT
 URL: https://github.com/metachris/raspberrypi-utils
+
+12 feb 2015 - Additions by Xander Maas to support A+/B+/Compute Module and RPi2
 """
 import re
 
@@ -32,7 +34,11 @@ model_data = {
     '9': ('A', '2.0', 256, 'Qisda', ''),
     'd': ('B', '2.0', 512, 'Egoman', ''),
     'e': ('B', '2.0', 512, 'Sony', ''),
-    'f': ('B', '2.0', 512, 'Qisda', '')
+    'f': ('B', '2.0', 512, 'Qisda', ''),
+    '10': ('B+', 'x.x', 512, '?', ''),
+    '11': ('CM', 'x.x', 512, '?', 'Compute Module'),
+    '12': ('A+', 'x.x', 256, '?', ''),
+    'a01041': ('2B', '1.1', 1024, 'Sony', '')
 }
 
 
